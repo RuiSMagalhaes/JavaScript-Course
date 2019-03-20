@@ -101,11 +101,7 @@ mark = {
   }
 };
 
-john.calcBMI();
-mark.calcBMI();
-
-
-if (john.bmi > mark.bmi) {
+if (john.calcBMI() > mark.calcBMI()) {
   console.log(john.name + " has the higher BMI. His BMI is: " + john.bmi);
 } else if (mark.bmi > john.bmi) {
   console.log(mark.name + " has the higher BMI. His BMI is: " + mark.bmi);
