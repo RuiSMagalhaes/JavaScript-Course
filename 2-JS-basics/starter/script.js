@@ -76,3 +76,74 @@ console.log(tips, total);
 
 console.log("3rd challenge finished!!");
 
+
+// 4th challenge
+
+console.log("4th challenge");
+
+
+john = {
+  name: "John nothing",
+  mass: 80,
+  height: 1.85,
+  calcBMI: function() {
+    return this.bmi = this.mass / (this.height * this.height);
+  }
+
+};
+
+mark = {
+  name: "Mark something",
+  mass: 50,
+  height: 1.23,
+  calcBMI: function() {
+    return this.bmi = this.mass / (this.height * this.height);
+  }
+};
+
+john.calcBMI();
+mark.calcBMI();
+
+
+if (john.bmi > mark.bmi) {
+  console.log(john.name + " has the higher BMI. His BMI is: " + john.bmi);
+} else if (mark.bmi > john.bmi) {
+  console.log(mark.name + " has the higher BMI. His BMI is: " + mark.bmi);
+} else  {
+  console.log("Mark and John has the same BMI. The value is of: " + john.bmi);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+console.log("4th challenge finished!!");
