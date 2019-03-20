@@ -120,25 +120,28 @@ john = {
     return this.bmi = this.mass / (this.height * this.height);
   },
   bills: [124, 48, 268, 180, 42],
-  calcTip: function() {
+  calcTips: function() {
     this.tips = [];
     this.total = [];
     for (var i = 0; i < this.bills.length; i++) {
-      if (this.bills[i] < 0) {
+      var tip;
+      var bill = this.bills[i];
+
+      if (bill < 0) {
         tip = 0;
-      } else if (this.bills[i] < 50) {
-        tip = this.bills[i] * .2;
-      } else if (this.bills[i] >= 50 && this.bills[i] <= 200) {
-        tip =  this.bills[i] * .15;
+      } else if (bill < 50) {
+        tip = bill * .2;
+      } else if (bill >= 50 && bill <= 200) {
+        tip =  bill * .15;
       } else {
-        tip = this.bills[i] * .10;
+        tip = bill * .10;
       };
       this.tips.push(tip);
-      this.total.push(tip + this.bills[i]);
+      this.total.push(tip + bill);
     };
   },
   calcAverageTip: function(){
-    this.calcTip();
+    this.calcTips();
     sum = 0;
     for (var i = 0; i < this.tips.length; i++) {
       sum = sum + this.tips[i];
@@ -155,26 +158,29 @@ mark = {
   calcBMI: function() {
     return this.bmi = this.mass / (this.height * this.height);
   },
-  bills: [77, 375, 110, 45],
-  calcTip: function() {
+  bills: [77, 475, 110, 45],
+  calcTips: function() {
     this.tips = [];
     this.total = [];
     for (var i = 0; i < this.bills.length; i++) {
-      if (this.bills[i] < 0) {
+      var tip;
+      var bill = this.bills[i];
+
+      if (bill < 0) {
         tip = 0;
-      } else if (this.bills[i] < 100) {
-        tip = this.bills[i] * .2;
-      } else if (this.bills[i] >= 100 && this.bills[i] <= 300) {
-        tip =  this.bills[i] * .1;
+      } else if (bill < 100) {
+        tip = bill * .2;
+      } else if (bill >= 100 && bill <= 300) {
+        tip =  bill * .1;
       } else {
-        tip = this.bills[i] * .25;
+        tip = bill * .25;
       };
       this.tips.push(tip);
-      this.total.push(tip + this.bills[i]);
+      this.total.push(tip + bill);
     };
   },
   calcAverageTip: function(){
-    this.calcTip();
+    this.calcTips();
     sum = 0;
     for (var i = 0; i < this.tips.length; i++) {
       sum = sum + this.tips[i];
@@ -190,28 +196,6 @@ if (john.calcAverageTip() > mark.calcAverageTip()) {
 } else {
   console.log("the average tip of both families are the same of " + mark.avgTip);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // changing challenge
 console.log("5th challenge finished!!");
