@@ -9,22 +9,49 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, dice;
+var scores, roundScore, activePlayer;
 
 scores = [0,0];
 roundScore = 0;
 activePlayer = 1;
 
-dice = Math.floor(Math.random()*6) + 1;
+document.querySelector(".dice").style.display= "none";
+
+document.getElementById("score-0").textContent= "0";
+document.getElementById("score-1").textContent= "0";
+document.getElementById("current-0").textContent= "0";
+document.getElementById("current-1").textContent= "0";
 
 
-// Setter:
-document.querySelector("#current-" + activePlayer).textContent = dice;
+// event listenner for the "roll dice" button with anonymous function
+document.querySelector(".btn-roll").addEventListener("click", function() {
+
+  // 1. Random number of the dice
+  var dice = Math.floor(Math.random()*6) + 1;
+
+  // 2. Display result
+  var diceDOM = document.querySelector(".dice");
+  diceDOM.style.display= "block";
+  diceDOM.src = "dice-" + dice + ".png"
+
+  // 3. Update the round score if the rolled number is NOT a 1
+
+});
+
+
+
+
+
+
+// JS EXAMPLES OF DOM MANIPULATION
+
+// SETTER:
+// document.querySelector("#current-" + activePlayer).textContent = dice;
 // document.querySelector("#current-" + activePlayer).innerHTML = "<em>" + dice + "</em>";
 
-// Getter:
-var x = document.querySelector("#score-0").textContent;
-console.log(x);
+// GETTER:
+// var x = document.querySelector("#score-0").textContent;
+// console.log(x);
 
-// Change css:
-document.querySelector(".dice").style.display= "none";
+// CHANGE CSS:
+// document.querySelector(".dice").style.display= "none";
