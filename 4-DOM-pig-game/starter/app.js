@@ -33,25 +33,64 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 
   // 2. Display result
   var diceDOM = document.querySelector(".dice");
+  // show the dice
   diceDOM.style.display= "block";
   // changing the image displayed
   diceDOM.src = "dice-" + dice + ".png"
 
   // 3. Update the round score if the rolled number is NOT a 1
   if (dice != 1) {
-    // Add score
+    // TODO: Add score
     roundScore += dice;
     document.querySelector("#current-" + activePlayer).textContent = roundScore;
   } else {
-    // Next Player
-    document.querySelector(".player-" + activePlayer + "-panel").classList.toggle("active");
-    roundScore = 0;
-    document.querySelector("#current-" + activePlayer).textContent = roundScore;
-    activePlayer === 0 ?  activePlayer = 1: activePlayer = 0;
-    document.querySelector(".player-" + activePlayer + "-panel").classList.toggle("active");
-    document.querySelector(".dice").style.display= "none";
+    // TODO: Next Player
+    nextPlayer();
+
+
   }
 });
+
+document.querySelector(".btn-hold").addEventListener("click", function(){
+  // TODO : add current score to global one
+  scores[activePlayer] += roundScore;
+  // update global score on the html
+  document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
+  // check if player reaches 100 points and wins;
+  if (scores[activePlayer] >= 100) {
+    // Change the "player-x" title to "Winner!"
+    document.querySelector("#name-" + activePlayer).textContent = "Winner!";
+    // hide the dice
+    document.querySelector(".dice").style.display= "none";
+    // add the winner class
+    document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
+    document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
+  } else {
+    // if the score is less than 100, change to another player
+    nextPlayer();
+  }
+
+
+});
+
+
+// function to change player:
+function nextPlayer(){
+  // remove the active player class from the current player
+  document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
+
+  // the roundScore variable is set to 0
+  roundScore = 0;
+  // put the current score of the player that was playing to 0.
+  document.querySelector("#current-" + activePlayer).textContent = roundScore;
+  // Change the active player to the other player
+  activePlayer === 0 ?  activePlayer = 1: activePlayer = 0;
+  // toggle the "active" class
+  document.querySelector(".player-" + activePlayer + "-panel").classList.add("active");
+  // hide the dice
+  document.querySelector(".dice").style.display= "none";
+
+};
 
 
 
