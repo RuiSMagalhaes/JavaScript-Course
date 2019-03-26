@@ -9,56 +9,56 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
 
 init();
 
 // event listenner for the "roll dice" button with anonymous function
 document.querySelector(".btn-roll").addEventListener("click", function() {
+  if (gamePlaying) {
+    // 1. Random number of the dice
+    var dice = Math.floor(Math.random()*6) + 1;
 
-  // 1. Random number of the dice
-  var dice = Math.floor(Math.random()*6) + 1;
+    // 2. Display result
+    var diceDOM = document.querySelector(".dice");
+    // show the dice
+    diceDOM.style.display= "block";
+    // changing the image displayed
+    diceDOM.src = "dice-" + dice + ".png"
 
-  // 2. Display result
-  var diceDOM = document.querySelector(".dice");
-  // show the dice
-  diceDOM.style.display= "block";
-  // changing the image displayed
-  diceDOM.src = "dice-" + dice + ".png"
-
-  // 3. Update the round score if the rolled number is NOT a 1
-  if (dice != 1) {
-    // TODO: Add score
-    roundScore += dice;
-    document.querySelector("#current-" + activePlayer).textContent = roundScore;
-  } else {
-    // TODO: Next Player
-    nextPlayer();
-
-
+    // 3. Update the round score if the rolled number is NOT a 1
+    if (dice != 1) {
+      // TODO: Add score
+      roundScore += dice;
+      document.querySelector("#current-" + activePlayer).textContent = roundScore;
+    } else {
+      // TODO: Next Player
+      nextPlayer();
+    }
   }
 });
 
 document.querySelector(".btn-hold").addEventListener("click", function(){
-  // TODO : add current score to global one
-  scores[activePlayer] += roundScore;
-  // update global score on the html
-  document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
-  // check if player reaches 100 points and wins;
-  if (scores[activePlayer] >= 100) {
-    // Change the "player-x" title to "Winner!"
-    document.querySelector("#name-" + activePlayer).textContent = "Winner!";
-    // hide the dice
-    document.querySelector(".dice").style.display= "none";
-    // add the winner class
-    document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
-    document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
-  } else {
-    // if the score is less than 100, change to another player
-    nextPlayer();
+  if (gamePlaying) {
+    // TODO : add current score to global one
+    scores[activePlayer] += roundScore;
+    // update global score on the html
+    document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
+    // check if player reaches 100 points and wins;
+    if (scores[activePlayer] >= 100) {
+      // Change the "player-x" title to "Winner!"
+      document.querySelector("#name-" + activePlayer).textContent = "Winner!";
+      // hide the dice
+      document.querySelector(".dice").style.display= "none";
+      // add the winner class
+      document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
+      document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
+      gamePlaying = false;
+    } else {
+      // if the score is less than 100, change to another player
+      nextPlayer();
+    }
   }
-
-
 });
 
 
@@ -77,7 +77,6 @@ function nextPlayer(){
   document.querySelector(".player-" + activePlayer + "-panel").classList.add("active");
   // hide the dice
   document.querySelector(".dice").style.display= "none";
-
 };
 
 
@@ -87,6 +86,7 @@ function init() {
   scores = [0,0];
   roundScore = 0;
   activePlayer = 0;
+  gamePlaying = true;
   // hide the image of the dice
   document.querySelector(".dice").style.display= "none";
 
@@ -110,10 +110,6 @@ function init() {
 
   // Adding class "active" "to player 1.
   document.querySelector(".player-0-panel").classList.add("active");
-
-
-
-
 }
 
 
