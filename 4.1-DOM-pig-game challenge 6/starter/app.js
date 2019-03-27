@@ -1,15 +1,18 @@
 /*
-GAME RULES:
+CHALLENGE 6 GAME RULES:
 
 - The game has 2 players, playing in rounds
 - In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
 - BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
+- In top of that, if a player rolls two 6's in a row, he loses his ROUND scrore and his TOTAL score. After that, it's the next player's turn.
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
-- The first player to reach 100 points on GLOBAL score wins the game
+- The first player to reach 100 points on GLOBAL score wins the game.
+- Add an input field to change the winning points.
+- Add another dice to the game. the player looses his current scores if one of htem is a 1.
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying;
+var scores, roundScore, activePlayer, gamePlaying, previousDice;
 
 init();
 
@@ -87,6 +90,7 @@ function init() {
   roundScore = 0;
   activePlayer = 0;
   gamePlaying = true;
+  previousDice = 0;
   // hide the image of the dice
   document.querySelector(".dice").style.display= "none";
 
