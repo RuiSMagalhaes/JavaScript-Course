@@ -12,7 +12,7 @@ CHALLENGE 6 GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying, previousDice;
+var scores, roundScore, activePlayer, gamePlaying, previousDice, dice;
 
 init();
 
@@ -20,7 +20,8 @@ init();
 document.querySelector(".btn-roll").addEventListener("click", function() {
   if (gamePlaying) {
     // 1. Random number of the dice
-    var dice = Math.floor(Math.random()*6) + 1;
+    previousDice = dice;
+    dice = Math.floor(Math.random()*6) + 1;
 
     // 2. Display result
     var diceDOM = document.querySelector(".dice");
@@ -30,13 +31,19 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     diceDOM.src = "dice-" + dice + ".png"
 
     // 3. Update the round score if the rolled number is NOT a 1
-    if (dice != 1) {
+    if (previousDice === 6 && dice === 6) {
+      // put the TOTAL score of the player to 0
+      scores[activePlayer] = 0;
+      document.getElementById("score-" + activePlayer).textContent= scores[activePlayer];
+      nextPlayer();
+    } else if (dice != 1) {
       // TODO: Add score
       roundScore += dice;
       document.querySelector("#current-" + activePlayer).textContent = roundScore;
     } else {
       // TODO: Next Player
       nextPlayer();
+
     }
   }
 });
@@ -47,8 +54,19 @@ document.querySelector(".btn-hold").addEventListener("click", function(){
     scores[activePlayer] += roundScore;
     // update global score on the html
     document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
-    // check if player reaches 100 points and wins;
-    if (scores[activePlayer] >= 100) {
+    // Get the input of the final score;
+    var input = document.querySelector(".final-score").value;
+
+    // Undefined, 0 , null or "" are COERCED to false
+    // Anything else is COERCED to true
+
+    if (input) {
+      var winningScore = input;
+    } else {
+      winningScore = 100;
+    }
+
+    if (scores[activePlayer] >= winningScore) {
       // Change the "player-x" title to "Winner!"
       document.querySelector("#name-" + activePlayer).textContent = "Winner!";
       // hide the dice
@@ -69,7 +87,6 @@ document.querySelector(".btn-hold").addEventListener("click", function(){
 function nextPlayer(){
   // remove the active player class from the current player
   document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
-
   // the roundScore variable is set to 0
   roundScore = 0;
   // put the current score of the player that was playing to 0.
@@ -115,8 +132,6 @@ function init() {
   // Adding class "active" "to player 1.
   document.querySelector(".player-0-panel").classList.add("active");
 }
-
-
 
 
 
