@@ -12,7 +12,7 @@ CHALLENGE 6 GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying, previousDice, dice, hardReset;
+var scores, roundScore, activePlayer, gamePlaying, previousDice, dice;
 
 init();
 
@@ -32,7 +32,9 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 
     // 3. Update the round score if the rolled number is NOT a 1
     if (previousDice === 6 && dice === 6) {
-      hardReset = true;
+      // put the TOTAL score of the player to 0
+      scores[activePlayer] = 0;
+      document.getElementById("score-" + activePlayer).textContent= scores[activePlayer];
       nextPlayer();
     } else if (dice != 1) {
       // TODO: Add score
@@ -74,11 +76,6 @@ document.querySelector(".btn-hold").addEventListener("click", function(){
 function nextPlayer(){
   // remove the active player class from the current player
   document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
-  if (hardReset) {
-    // put the TOTAL score of the player to 0
-    scores[activePlayer] = 0;
-    document.getElementById("score-" + activePlayer).textContent= scores[activePlayer];
-  }
   // the roundScore variable is set to 0
   roundScore = 0;
   // put the current score of the player that was playing to 0.
@@ -89,8 +86,6 @@ function nextPlayer(){
   document.querySelector(".player-" + activePlayer + "-panel").classList.add("active");
   // hide the dice
   document.querySelector(".dice").style.display= "none";
-  // return the hardReset variable to false
-  hardReset = false;
 };
 
 
