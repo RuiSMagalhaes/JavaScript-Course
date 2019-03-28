@@ -54,8 +54,19 @@ document.querySelector(".btn-hold").addEventListener("click", function(){
     scores[activePlayer] += roundScore;
     // update global score on the html
     document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
-    // check if player reaches 100 points and wins;
-    if (scores[activePlayer] >= 100) {
+    // Get the input of the final score;
+    var input = document.querySelector(".final-score").value;
+
+    // Undefined, 0 , null or "" are COERCED to false
+    // Anything else is COERCED to true
+
+    if (input) {
+      var winningScore = input;
+    } else {
+      winningScore = 100;
+    }
+
+    if (scores[activePlayer] >= winningScore) {
       // Change the "player-x" title to "Winner!"
       document.querySelector("#name-" + activePlayer).textContent = "Winner!";
       // hide the dice
