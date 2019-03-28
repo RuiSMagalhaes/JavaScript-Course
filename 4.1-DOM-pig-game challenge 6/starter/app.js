@@ -12,7 +12,7 @@ CHALLENGE 6 GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying, previousDice;
+var scores, roundScore, activePlayer, gamePlaying, previousDice, dice, hardReset;
 
 init();
 
@@ -20,7 +20,8 @@ init();
 document.querySelector(".btn-roll").addEventListener("click", function() {
   if (gamePlaying) {
     // 1. Random number of the dice
-    var dice = Math.floor(Math.random()*6) + 1;
+    previousDice = dice;
+    dice = Math.floor(Math.random()*6) + 1;
 
     // 2. Display result
     var diceDOM = document.querySelector(".dice");
@@ -30,13 +31,17 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     diceDOM.src = "dice-" + dice + ".png"
 
     // 3. Update the round score if the rolled number is NOT a 1
-    if (dice != 1) {
+    if (previousDice === 6 && dice === 6) {
+      hardReset = true;
+      nextPlayer();
+    } else if (dice != 1) {
       // TODO: Add score
       roundScore += dice;
       document.querySelector("#current-" + activePlayer).textContent = roundScore;
     } else {
       // TODO: Next Player
       nextPlayer();
+
     }
   }
 });
@@ -69,7 +74,11 @@ document.querySelector(".btn-hold").addEventListener("click", function(){
 function nextPlayer(){
   // remove the active player class from the current player
   document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
-
+  if (hardReset) {
+    // put the TOTAL score of the player to 0
+    scores[activePlayer] = 0;
+    document.getElementById("score-" + activePlayer).textContent= scores[activePlayer];
+  }
   // the roundScore variable is set to 0
   roundScore = 0;
   // put the current score of the player that was playing to 0.
@@ -80,6 +89,8 @@ function nextPlayer(){
   document.querySelector(".player-" + activePlayer + "-panel").classList.add("active");
   // hide the dice
   document.querySelector(".dice").style.display= "none";
+  // return the hardReset variable to false
+  hardReset = false;
 };
 
 
@@ -115,8 +126,6 @@ function init() {
   // Adding class "active" "to player 1.
   document.querySelector(".player-0-panel").classList.add("active");
 }
-
-
 
 
 
