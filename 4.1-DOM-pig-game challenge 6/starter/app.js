@@ -21,30 +21,38 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
   if (gamePlaying) {
     // 1. Random number of the dice
     previousDice = dice;
-    dice = Math.floor(Math.random()*6) + 1;
+    dice1 = Math.floor(Math.random()*6) + 1;
+    dice2 = Math.floor(Math.random()*6) + 1;
 
     // 2. Display result
-    var diceDOM = document.querySelector(".dice");
-    // show the dice
-    diceDOM.style.display= "block";
-    // changing the image displayed
-    diceDOM.src = "dice-" + dice + ".png"
+    document.getElementById("dice-1").style.display = "block"
+    document.getElementById("dice-2").style.display = "block"
+    document.getElementById("dice-1").src = "dice-" + dice1 + ".png"
+    document.getElementById("dice-2").src = "dice-" + dice2 + ".png"
 
     // 3. Update the round score if the rolled number is NOT a 1
-    if (previousDice === 6 && dice === 6) {
-      // put the TOTAL score of the player to 0
-      scores[activePlayer] = 0;
-      document.getElementById("score-" + activePlayer).textContent= scores[activePlayer];
-      nextPlayer();
-    } else if (dice != 1) {
+    if (dice1 != 1 && dice2 != 1) {
       // TODO: Add score
-      roundScore += dice;
+      roundScore += dice1 + dice2;
       document.querySelector("#current-" + activePlayer).textContent = roundScore;
     } else {
       // TODO: Next Player
       nextPlayer();
-
     }
+    // if (previousDice === 6 && dice === 6) {
+    //   // put the TOTAL score of the player to 0
+    //   scores[activePlayer] = 0;
+    //   document.getElementById("score-" + activePlayer).textContent= scores[activePlayer];
+    //   nextPlayer();
+    // } else if (dice != 1) {
+    //   // TODO: Add score
+    //   roundScore += dice;
+    //   document.querySelector("#current-" + activePlayer).textContent = roundScore;
+    // } else {
+    //   // TODO: Next Player
+    //   nextPlayer();
+
+    // }
   }
 });
 
@@ -70,7 +78,8 @@ document.querySelector(".btn-hold").addEventListener("click", function(){
       // Change the "player-x" title to "Winner!"
       document.querySelector("#name-" + activePlayer).textContent = "Winner!";
       // hide the dice
-      document.querySelector(".dice").style.display= "none";
+      document.querySelector(".dice-1").style.display= "none";
+      document.querySelector(".dice-2").style.display= "none";
       // add the winner class
       document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
       document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
@@ -96,7 +105,8 @@ function nextPlayer(){
   // toggle the "active" class
   document.querySelector(".player-" + activePlayer + "-panel").classList.add("active");
   // hide the dice
-  document.querySelector(".dice").style.display= "none";
+  document.querySelector("#dice-1").style.display= "none";
+  document.querySelector("#dice-2").style.display= "none";
 };
 
 
@@ -109,7 +119,8 @@ function init() {
   gamePlaying = true;
   previousDice = 0;
   // hide the image of the dice
-  document.querySelector(".dice").style.display= "none";
+  document.querySelector("#dice-1").style.display= "none";
+  document.querySelector("#dice-2").style.display= "none";
 
   // changing every score to 0
   document.getElementById("score-0").textContent= "0";
